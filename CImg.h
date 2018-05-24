@@ -18181,7 +18181,7 @@ namespace cimg_library_suffixed {
               _cimg_mp_op("Function 'fact()'");
               arg1 = compile(ss5,se1,depth1,0,is_single);
               if (_cimg_mp_is_vector(arg1)) _cimg_mp_vector1_v(mp_factorial,arg1);
-              if (_cimg_mp_is_constant(arg1)) _cimg_mp_constant(cimg::factorial(mem[arg1]));
+              if (_cimg_mp_is_constant(arg1)) _cimg_mp_constant(cimg::factorial((int)mem[arg1]));
               _cimg_mp_scalar1(mp_factorial,arg1);
             }
 
@@ -18189,7 +18189,7 @@ namespace cimg_library_suffixed {
               _cimg_mp_op("Function 'fibo()'");
               arg1 = compile(ss5,se1,depth1,0,is_single);
               if (_cimg_mp_is_vector(arg1)) _cimg_mp_vector1_v(mp_fibonacci,arg1);
-              if (_cimg_mp_is_constant(arg1)) _cimg_mp_constant(cimg::fibonacci(mem[arg1]));
+              if (_cimg_mp_is_constant(arg1)) _cimg_mp_constant(cimg::fibonacci((int)mem[arg1]));
               _cimg_mp_scalar1(mp_fibonacci,arg1);
             }
 
@@ -18621,7 +18621,7 @@ namespace cimg_library_suffixed {
               _cimg_mp_check_type(arg2,2,1,0);
               _cimg_mp_check_type(arg3,3,1,0);
               if (_cimg_mp_is_constant(arg1) && _cimg_mp_is_constant(arg2) && _cimg_mp_is_constant(arg3))
-                _cimg_mp_constant(cimg::permutations(mem[arg1],mem[arg2],(bool)mem[arg3]));
+                _cimg_mp_constant(cimg::permutations((int)mem[arg1],(int)mem[arg2],(bool)mem[arg3]));
               _cimg_mp_scalar3(mp_permutations,arg1,arg2,arg3);
             }
 
@@ -20907,7 +20907,7 @@ namespace cimg_library_suffixed {
       }
 
       static double mp_factorial(_cimg_math_parser& mp) {
-        return cimg::factorial(_mp_arg(2));
+        return cimg::factorial((int)_mp_arg(2));
       }
 
       static double mp_fibonacci(_cimg_math_parser& mp) {
@@ -21984,7 +21984,7 @@ namespace cimg_library_suffixed {
             cimg_for_inC(img,0,vsiz - 1,c) { *(ptrd++) = (double)*ptrs; ptrs+=whd; }
           } break;
           default : // Dirichlet
-            if (img.containsXYZC(x,y,z)) {
+            if (img.containsXYZC((int)x,(int)y,(int)z)) {
               ptrs = &img((int)x,(int)y,(int)z);
               cimg_for_inC(img,0,vsiz - 1,c) { *(ptrd++) = (double)*ptrs; ptrs+=whd; }
             } else std::memset(ptrd,0,vsiz*sizeof(double));
@@ -22092,7 +22092,7 @@ namespace cimg_library_suffixed {
             cimg_for_inC(img,0,vsiz - 1,c) { *(ptrd++) = (double)*ptrs; ptrs+=whd; }
           } break;
           default : // Dirichlet
-            if (img.containsXYZC(x,y,z)) {
+            if (img.containsXYZC((int)x,(int)y,(int)z)) {
               ptrs = &img((int)x,(int)y,(int)z);
               cimg_for_inC(img,0,vsiz - 1,c) { *(ptrd++) = (double)*ptrs; ptrs+=whd; }
             } else std::memset(ptrd,0,vsiz*sizeof(double));
@@ -22457,7 +22457,7 @@ namespace cimg_library_suffixed {
       }
 
       static double mp_permutations(_cimg_math_parser& mp) {
-        return cimg::permutations(_mp_arg(2),_mp_arg(3),(bool)_mp_arg(4));
+        return cimg::permutations((int)_mp_arg(2),(int)_mp_arg(3),(bool)_mp_arg(4));
       }
 
       static double mp_polygon(_cimg_math_parser& mp) {
@@ -23397,7 +23397,7 @@ namespace cimg_library_suffixed {
             cimg_for_inC(img,0,vsiz - 1,c) { *(ptrd++) = (double)*ptrs; ptrs+=whd; }
           } break;
           default : // Dirichlet
-            if (img.containsXYZC(x,y,z)) {
+            if (img.containsXYZC((int)x,(int)y,(int)z)) {
               ptrs = &img((int)x,(int)y,(int)z);
               cimg_for_inC(img,0,vsiz - 1,c) { *(ptrd++) = (double)*ptrs; ptrs+=whd; }
             } else std::memset(ptrd,0,vsiz*sizeof(double));
@@ -23505,7 +23505,7 @@ namespace cimg_library_suffixed {
             cimg_for_inC(img,0,vsiz - 1,c) { *(ptrd++) = (double)*ptrs; ptrs+=whd; }
           } break;
           default : // Dirichlet
-            if (img.containsXYZC(x,y,z)) {
+            if (img.containsXYZC((int)x,(int)y,(int)z)) {
               ptrs = &img((int)x,(int)y,(int)z);
               cimg_for_inC(img,0,vsiz - 1,c) { *(ptrd++) = (double)*ptrs; ptrs+=whd; }
             } else std::memset(ptrd,0,vsiz*sizeof(double));
@@ -44327,8 +44327,8 @@ namespace cimg_library_suffixed {
                                     cimg_instance);
       if (r1<=0 || r2<=0) return draw_point(x0,y0,color,opacity);
       if (r1==r2 && (float)(int)r1==r1) {
-        if (pattern) return draw_circle(x0,y0,r1,color,opacity,pattern);
-        else return draw_circle(x0,y0,r1,color,opacity);
+        if (pattern) return draw_circle(x0,y0,(int)cimg::round(r1),color,opacity,pattern);
+        else return draw_circle(x0,y0,(int)cimg::round(r1),color,opacity);
       }
       cimg_init_scanline(color,opacity);
       const float
@@ -47723,7 +47723,7 @@ namespace cimg_library_suffixed {
                 if (_depth>1 || force_display_z_coord)
                   cimg_snprintf(text,text._width," Point (%d,%d,%d) = [ ",origX + (int)X,origY + (int)Y,origZ + (int)Z);
                 else cimg_snprintf(text,text._width," Point (%d,%d) = [ ",origX + (int)X,origY + (int)Y);
-                CImg<T> values = get_vector_at(X,Y,Z);
+                CImg<T> values = get_vector_at((int)X,(int)Y,(int)Z);
                 const bool is_large_spectrum = values._height>16;
                 if (is_large_spectrum)
                   values.draw_image(0,8,values.get_rows(values._height - 8,values._height - 1)).resize(1,16,1,1,0);
@@ -56539,7 +56539,8 @@ namespace cimg_library_suffixed {
       } else {
         if (new_data) { // Insert with re-allocation.
           if (npos) std::memcpy((void*)new_data,(void*)_data,sizeof(CImg<T>)*npos);
-          if (npos!=_width - 1) std::memcpy((void*)(new_data + npos + 1),(void*)(_data + npos),sizeof(CImg<T>)*(_width - 1 - npos));
+          if (npos!=_width - 1)
+            std::memcpy((void*)(new_data + npos + 1),(void*)(_data + npos),sizeof(CImg<T>)*(_width - 1 - npos));
           std::memset((void*)_data,0,sizeof(CImg<T>)*(_width - 1));
           delete[] _data;
           _data = new_data;
