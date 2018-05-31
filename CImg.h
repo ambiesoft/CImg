@@ -22480,7 +22480,7 @@ namespace cimg_library_suffixed {
             CImg<T> color(img._spectrum,1,1,1,0);
             float opacity = 1;
             unsigned int i = 5;
-            cimg_foroff(points,k) if (i<i_end) points(k/2,k%2) = cimg::round(_mp_arg(i++));
+            cimg_foroff(points,k) if (i<i_end) points(k/2,k%2) = (int)cimg::round(_mp_arg(i++));
             else { is_invalid_arguments = true; break; }
             if (!is_invalid_arguments) {
               if (i<i_end) opacity = (float)_mp_arg(i++);
